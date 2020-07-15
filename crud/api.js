@@ -10,9 +10,15 @@ module.exports = {
         const sortBy = paging.sortBy || 'createdAt';
         const sortType = paging.sortType || 'desc';
         const total = await this.countDocuments()
-        const list = await this.find({}).limit(+limit).skip(+offset).sort({ [sortBy]: sortType }).populate('author','name').populate('category','name')
+        const list = await this.find({}).limit(+limit).skip(+offset).sort({ [sortBy]: sortType }).populate('author', 'name').populate('category', 'name')
 
         cb(false, list, total)
+    },
+    listAll: function (paging, cb) {
+        const sortBy = paging.sortBy || 'createdAt';
+        const sortType = paging.sortType || 'desc';
+        this.find({}, cb).sort({ [sortBy]: sortType })
+
     },
 
     detail: function (query, cb) {

@@ -21,6 +21,16 @@ module.exports = (API) => {
             })
         })
     }
+    module.listAll = function (req, res, next) {
+        API.listAll(req.query, function (err, list, total) {
+            if (err) res.json(err)
+            res.json({
+                list: list,
+                success: true,
+                total: total
+            })
+        })
+    }
 
     module.detail = function (req, res, next) {
         API.detail({ _id: req.params.id }, function (err, r) {
