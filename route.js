@@ -1,22 +1,21 @@
-var Book = require('./controller/book');
-var Author = require('./controller/author');
-
-module.exports = function(router) {
-    router.post('/book', Book.create);
-    router.get('/book', Book.list);
-    router.get('/book/:id', Book.detail);
-    router.post('/book/:id', Book.update);
-    router.delete('/book/:id', Book.remove);
-
+// var Book = require('./book/controller');
+// var Author = require('./author/controller');
+// var Category = require('./category/controller');
+// var Library = require('./library/controller');
+// var Love = require('./love/controller');
+// var Rate = require('./rate/controller');
+// var User = require('./user/controller');
+// var Comment = require('./comment/controller');
 
 
-    router.post('/author', Author.create);
-    router.get('/author', Author.list);
-    router.get('/author/:id', Author.detail);
-    router.post('/author/:id', Author.update);
-    router.delete('/author/:id', Author.remove);
+module.exports = function (router) {
+    ['book', 'author', "category", "library", "love", "rate", "user", "comment"].map(i => {
+        const controller = require('./' + i + '/controller');
+        router.post('/' + i, controller.create);
+        router.get('/' + i, controller.list);
+        router.get('/' + i + '/:id', controller.detail);
+        router.post('/' + i + '/:id', controller.update);
+        router.delete('/' + i + '/:id', controller.remove);
 
-    router.get('/author/:id/book', Author.book);
-
-    
+    })
 }

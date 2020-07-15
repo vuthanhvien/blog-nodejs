@@ -9,8 +9,8 @@ module.exports = {
         const offset = limit * page;
         const sortBy = paging.sortBy || 'createdAt';
         const sortType = paging.sortType || 'desc';
-        const total = await this.count()
-        const list = await this.find({}).limit(+limit).skip(+offset).sort({ [sortBy]: sortType });
+        const total = await this.countDocuments()
+        const list = await this.find({}).limit(+limit).skip(+offset).sort({ [sortBy]: sortType }).populate('author','name').populate('category','name')
 
         cb(false, list, total)
     },

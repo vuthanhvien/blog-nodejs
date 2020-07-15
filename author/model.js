@@ -8,8 +8,12 @@ var schema = new Schema({
     },
     birthday: Date,
     description: String,
+    image: String,
+    country: String,
+    tag: String
 }, {
-    timestamps: true
+    timestamps: true,
+    versionKey: false 
 });
 
 module.exports = schema;

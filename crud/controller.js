@@ -43,8 +43,7 @@ module.exports = (API) => {
 
     module.remove = function (req, res, next) {
         API.delete({ _id: req.params.id }, function (err, r) {
-            if (err)
-                res.json(err)
+            if (err) res.json(err)
             res.json({
                 message: "r deleted successfully"
             })
