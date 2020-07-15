@@ -8,7 +8,8 @@ module.exports = new mongoose.Schema({
     },
     description: String,
     image: String,
-    banner: String
+    banner: String,
+    slug: String
 }, {
     timestamps: true,
     versionKey: false 

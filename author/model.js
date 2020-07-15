@@ -8,6 +8,7 @@ var schema = new Schema({
     },
     birthday: Date,
     description: String,
+    slug: String,
     image: String,
     country: String,
     tag: String

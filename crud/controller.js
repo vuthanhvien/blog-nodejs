@@ -60,5 +60,21 @@ module.exports = (API) => {
         })
     }
 
+
+    module.createOrUpdate = function (req, res, next) {
+        var data = { ...req.body };
+        API.createOrUpdate(data, function (err, r) {
+            if (err) res.json(err)
+            if(res){
+                res.json({
+                    message: "r deleted successfully"
+                })
+            }
+            
+        })
+    }
+
+
+    
     return module
 }

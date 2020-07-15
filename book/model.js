@@ -8,13 +8,17 @@ module.exports = new Schema({
         unique: false,
         required: true
     },
-    author: { type: Schema.Types.ObjectId, ref: 'Author', required: true },
-    category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
+    slug: String,
+    author: { type: Schema.Types.ObjectId, ref: 'Author' },
+    category: { type: Schema.Types.ObjectId, ref: 'Category' },
+    authorSlug: String,
+    categorySlug: String,
     dateReleased: Date,
     description: String,
-    image: { type: String, required: true },
+    image: String,
     rate: Number,
-    banner: String
+    banner: String,
+    ref: String
 }, {
     timestamps: true,
     versionKey: false
