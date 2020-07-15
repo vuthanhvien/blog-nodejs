@@ -18,7 +18,7 @@ module.exports = new Schema({
     image: String,
     rate: Number,
     banner: String,
-    ref: String
+    url: String
 }, {
     timestamps: true,
     versionKey: false
