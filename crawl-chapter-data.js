@@ -26,21 +26,28 @@ const getPageContent = (uri) => {
     return request(options)
 }
 var count = 0;
-const getChapter = async (c) => {
-    if(c && c.url){
-        var $ = await getPageContent(`${c.url}`);
-        var description = $('.doc-online').text();
-        console.log(count++ + '===>'+c.url);
-        chapter.findByIdAndUpdate(c._id, {description: description}, ()=>{})
+const getChapter = async (c = {}, total) => {
+    console.log(count++ + ' ===>' + c.url);
+    if (c.url) {
+        var $ = await getPageContent(`${c.url || URL}`);
+        $('.doc-online h5').remove()
+        $('.doc-online h5').remove()
+        $('.doc-online .btn-group ').remove()
+        $('.doc-online .btn-group ').remove()
+        $('.doc-online a ').remove()
+        var description = $('.doc-online').text() || 'No data';
+        chapter.findByIdAndUpdate(c._id, { description: description }, () => { })
+    } else {
+        var $ = await getPageContent('https://sachvui.com/doc-sach/bai-hoc-vo-gia-tu-dieu-binh-di-francis-xavier/chuyen-7-khat-vong-song.html');
     }
 }
 
-chapter.listAll({limit: 5000, page: 0}, async (e, all) => {
+chapter.listAll({}, async (e, all) => {
     var step = 100;
     for (let i = 0; i < all.length; i = i + step) {
-        var actions  = []
-        for(let a = 0; a < step; a++ ){
-            actions.push(getChapter(all[i + a]));
+        var actions = []
+        for (let a = 0; a < step; a++) {
+            actions.push(getChapter(all[i + a]), all.length);
         }
         await Promise.all(actions)
 
