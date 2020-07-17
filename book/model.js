@@ -6,7 +6,8 @@ module.exports = new Schema({
     name: {
         type: String,
         unique: false,
-        required: true
+        required: true,
+        index: true 
     },
     slug: String,
     author: { type: Schema.Types.ObjectId, ref: 'Author' },
@@ -22,4 +23,4 @@ module.exports = new Schema({
 }, {
     timestamps: true,
     versionKey: false
-});
+}).index({name: 'text'});
