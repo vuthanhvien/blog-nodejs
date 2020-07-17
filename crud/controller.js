@@ -5,7 +5,7 @@ module.exports = (API) => {
         API.create(data, function (err, r) {
             if (err) res.json(err)
             res.json({
-                message: "Record created successfully",
+                msg: "Record created successfully",
                 success: true
             })
         })
@@ -63,7 +63,7 @@ module.exports = (API) => {
         API.update({ _id: req.params.id }, data, function (err, r) {
             if (err) res.json(err)
             res.json({
-                message: "Record updated successfully",
+                msg: "Record updated successfully",
                 success: true
             })
         })
@@ -73,7 +73,7 @@ module.exports = (API) => {
         API.delete({ _id: req.params.id }, function (err, r) {
             if (err) res.json(err)
             res.json({
-                message: "Record deleted successfully"
+                msg: "Record deleted successfully"
             })
         })
     }
@@ -85,7 +85,7 @@ module.exports = (API) => {
             if (err) res.json(err)
             if(res){
                 res.json({
-                    message: "Record deleted successfully"
+                    msg: "Record deleted successfully"
                 })
             }
             

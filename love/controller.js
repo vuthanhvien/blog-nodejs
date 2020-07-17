@@ -12,7 +12,7 @@ module.exports = {
         API.create(data, function (err, r) {
             if (err) res.json(err)
             res.json({
-                message: "data created successfully",
+                msg: "data created successfully",
                 success: true
             })
         })

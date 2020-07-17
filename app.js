@@ -27,7 +27,7 @@ app.use(function (req, res, next) {
 });
 
 app.use(session({
-  secret : "secret",
+  secret: "secret",
   saveUninitialized: true,
   resave: true
 }))
@@ -37,7 +37,7 @@ app.use(passport.session());
 
 
 
-mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true , useCreateIndex: true});
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true });
 
 
 app.use('/api', router);

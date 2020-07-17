@@ -19,7 +19,9 @@ module.exports = new Schema({
     phone: {
         unique: true,
         type: String,
-    }
+    },
+    avatar: String,
+    config: String,
 }, {
     timestamps: true,
     versionKey: false

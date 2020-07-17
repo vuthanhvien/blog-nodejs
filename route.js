@@ -9,6 +9,7 @@ module.exports = function (router) {
     router.post('/sendcode', userController.sendcode);
     router.post('/forgotpassword', userController.forgotpassword);
     router.get('/profile', auth.isAuth, userController.profile);
+    router.post('/profile', auth.isAuth, userController.update);
     router.post('/resetpassword', auth.isAuth, userController.resetpassword);
     router.post('/refreshtoken', auth.isAuth, userController.refreshtoken);
 
@@ -22,9 +23,9 @@ module.exports = function (router) {
         router.delete('/' + i + '/:id', controller.remove);
     })
 
-    router.get('**', (req, res) => res.json({ message: "404", success: false }));
-    router.post('**', (req, res) => res.json({ message: "404", success: false }));
-    router.delete('**', (req, res) => res.json({ message: "404", success: false }));
-    router.put('**', (req, res) => res.json({ message: "404", success: false }));
+    router.get('**', (req, res) => res.json({ msg: "404", success: false }));
+    router.post('**', (req, res) => res.json({ msg: "404", success: false }));
+    router.delete('**', (req, res) => res.json({ msg: "404", success: false }));
+    router.put('**', (req, res) => res.json({ msg: "404", success: false }));
 }
 

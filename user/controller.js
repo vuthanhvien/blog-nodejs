@@ -4,9 +4,11 @@ var API = require('./api');
 var jwtHelper = require('./auth');
 var bcrypt = require('bcrypt');
 
+var crud = require('./../crud/controller')
 
 
 module.exports = {
+    ...crud,
     login: function (req, res, next) {
         var query = {
             $or: [
@@ -22,7 +24,7 @@ module.exports = {
                 if (e) {
                     res.json({
                         success: false,
-                        message: 'User sai vcl'
+                        msg: 'User sai vcl'
                     })
                 } else {
 
@@ -36,7 +38,7 @@ module.exports = {
                     if (!isValid) {
                         res.json({
                             success: false,
-                            message: "Password sai vcl",
+                            msg: "Password sai vcl",
                         });
                     } else {
 
@@ -50,7 +52,7 @@ module.exports = {
             } catch (e) {
                 res.json({
                     success: false,
-                    message: 'User sai vcl'
+                    msg: 'User sai vcl'
                 })
             }
         })
@@ -66,19 +68,19 @@ module.exports = {
             API.create(userData, function (err, user) {
                 if (err) {
                     res.json({
-                        message: "Fuck",
+                        msg: "Fuck",
                         success: false
                     })
                 } else {
                     res.json({
-                        message: "success",
+                        msg: "success",
 
                     })
                 }
             });
         } else {
             res.json({
-                message: "success",
+                msg: "success",
                 success: false
 
             })
@@ -89,8 +91,9 @@ module.exports = {
     profile: function (req, res, next) {
         const tokenFromClient = req.headers["authorization"];
         var user = jwtHelper.getInfo(tokenFromClient);
+        var data = { ...req.body };
         var id = user.data._id;
-        console.log(user)
+
         API.findById(id, (e, data) => {
             console.log(data)
             res.json({
@@ -100,6 +103,29 @@ module.exports = {
 
         })
     },
+
+    update: function (req, res, next) {
+        const tokenFromClient = req.headers["authorization"];
+        var user = jwtHelper.getInfo(tokenFromClient);
+        var id = user.data._id;
+        const dataUser = { ...req.body };
+
+        delete dataUser.password;
+        delete dataUser.username;
+        delete dataUser.email;
+        console.log(dataUser)
+
+
+        API.update({ _id: id }, dataUser, (e, data) => {
+            res.json({
+                data: data,
+                success: true
+            });
+
+        })
+    },
+
+
     sendcode: function (req, res, next) {
         res.json({});
     },
@@ -109,7 +135,7 @@ module.exports = {
     forgotpassword: function (req, res, next) {
         res.json({});
     },
-    refreshtoken: function(res, res, next){
-        
+    refreshtoken: function (res, res, next) {
+
     }
 }

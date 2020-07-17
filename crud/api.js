@@ -13,9 +13,13 @@ module.exports = {
         const sortBy = paging.sortBy || 'createdAt';
         const sortType = paging.sortType || 'desc';
         const total = await this.countDocuments()
-        // const list = await this.find({}).limit(+limit).skip(+offset).sort({ [sortBy]: sortType }).populate('author', 'name').populate('category', 'name')
-       
-        const list = await this.find(paging.query || {}).limit(+limit).skip(+offset).sort({ [sortBy]: sortType }).populate('book', 'name')
+        const list = await this.find(paging.query || {})
+            .limit(+limit)
+            .skip(+offset)
+            .sort({ [sortBy]: sortType })
+            .populate('book', 'name')
+            .populate('author', 'name')
+            .populate('category', 'name')
         cb(false, list, total)
     },
     listAll: function (paging, cb) {
@@ -29,7 +33,7 @@ module.exports = {
     },
 
     update: function (query, updateData, cb) {
-        this.findOneAndUpdate(query, { $set: updateData }, { new: true }, cb);
+        this.findOneAndUpdate(query,   updateData , {  new: true}, cb);
     },
 
     delete: function (query, cb) {
