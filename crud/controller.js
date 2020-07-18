@@ -16,6 +16,10 @@ module.exports = (API) => {
         paging.query = {
             ...req.query
         }
+        if(paging.query.s){
+            paging.query.$text ={$search : paging.query.s};
+            delete paging.query.s;
+        }
         delete paging.query.limit;
         delete paging.query.page;
         delete paging.query.sortBy;

@@ -35,10 +35,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true });
-
 
 app.use('/api', router);
 route(router);
