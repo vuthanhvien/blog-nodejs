@@ -68,6 +68,7 @@ module.exports = {
             API.create(userData, function (err, user) {
                 if (err) {
                     res.json({
+                        ...err,
                         msg:userData,
                         success: false
                     })
