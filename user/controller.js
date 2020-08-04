@@ -68,7 +68,7 @@ module.exports = {
             API.create(userData, function (err, user) {
                 if (err) {
                     res.json({
-                        msg: "Fuck",
+                        msg:userData,
                         success: false
                     })
                 } else {
@@ -80,7 +80,7 @@ module.exports = {
             });
         } else {
             res.json({
-                msg: "success",
+                msg: "Thieeus",
                 success: false
 
             })

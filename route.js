@@ -13,7 +13,7 @@ module.exports = function (router) {
     router.post('/resetpassword', auth.isAuth, userController.resetpassword);
     router.post('/refreshtoken', auth.isAuth, userController.refreshtoken);
 
-    ['book', 'author', "category", "library", "love", "rate", "comment", "chapter"].map(i => {
+    ['book', 'author', "category", "library", "love", "comment", "chapter"].map(i => {
         const controller = require('./' + i + '/controller');
         router.post('/' + i, controller.create);
         router.get('/' + i, controller.list);

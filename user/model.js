@@ -16,10 +16,7 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    phone: {
-        unique: true,
-        type: String,
-    },
+    phone: String,
     avatar: String,
     config: String,
 }, {
