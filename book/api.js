@@ -13,7 +13,7 @@ schema.statics = {
         const total = await this.countDocuments()
         // const list = await this.find({}).limit(+limit).skip(+offset).sort({ [sortBy]: sortType }).populate('author', 'name').populate('category', 'name')
         var query = {
-            $text:  { $search: "vien" },
+            $text:  { $search: paging.s || '' },
             ...paging.query
         };
         const list = await this.find(query || {}).limit(+limit).skip(+offset).sort({ [sortBy]: sortType }).populate('book', 'name')
