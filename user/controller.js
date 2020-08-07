@@ -65,18 +65,23 @@ module.exports = {
                 email: req.body.email,
                 username: req.body.username || req.body.email,
             }
-            API.create(userData, function (err, user) {
+            API.create(userData, async function (err, user) {
                 if (err) {
                     res.json({
                         ...err,
-                        msg:userData,
                         success: false
                     })
                 } else {
-                    res.json({
-                        msg: "success",
+                    const userData = {
+                        _id: user._id,
+                        name: user.username,
+                        email: user.email,
+                    };
 
-                    })
+                    const accessToken = await jwtHelper.generateToken(userData, jwtHelper.accessTokenSecret, jwtHelper.accessTokenLife);
+                    const refreshToken = await jwtHelper.generateToken(userData, jwtHelper.refreshTokenSecret, jwtHelper.refreshTokenLife);
+
+                    res.json({ success: true, jwt: { accessToken, refreshToken }, data: user });
                 }
             });
         } else {
