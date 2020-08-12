@@ -6,5 +6,5 @@ schema.statics = {
     ...crud,
 }
 
-var model = mongoose.model('Library', schema);
+var model = mongoose.model('Bookmark', schema);
 module.exports = model;
