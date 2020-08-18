@@ -19,7 +19,10 @@ module.exports = new Schema({
     image: String,
     rate: Number,
     banner: String,
-    url: String
+    url: String,
+    linkPDF: String,
+    linkEPUB: String,
+    linkMOBI: String
 }, {
     timestamps: true,
     versionKey: false

@@ -4,7 +4,7 @@ const request = require('request-promise')
 const cheerio = require('cheerio')
 
 const URL = 'https://sachvui.com/'
-const urlDB = 'mongodb://localhost:27017/books';
+const urlDB = 'mongodb://localhost:27017/book3';
 
 
 mongoose.connect(urlDB, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
@@ -47,46 +47,46 @@ const getPageContent = (uri) => {
 var i = 0;
 
 
-const getBook = async (url) => {
-    var $ = await getPageContent(url);
+// const getBook = async (url) => {
+//     var $ = await getPageContent(url);
 
-    var name = $('.thong_tin_ebook .col-md-8 .ebook_title').text();
-    var authorName = $('.thong_tin_ebook .col-md-8 h5:nth-child(3)').text();
+//     var name = $('.thong_tin_ebook .col-md-8 .ebook_title').text();
+//     var authorName = $('.thong_tin_ebook .col-md-8 h5:nth-child(3)').text();
 
-    var categoryName = $('.thong_tin_ebook .col-md-8 h5:nth-child(4)').text();
-    categoryName = categoryName.substring(11)
-    authorName = authorName.substring(10)
-    var img = $('.thong_tin_ebook .cover img').attr('src');
-    var description = $('.gioi_thieu_sach').text();
+//     var categoryName = $('.thong_tin_ebook .col-md-8 h5:nth-child(4)').text();
+//     categoryName = categoryName.substring(11)
+//     authorName = authorName.substring(10)
+//     var img = $('.thong_tin_ebook .cover img').attr('src');
+//     var description = $('.gioi_thieu_sach').html().replace(/<br>/gm, '\n').replace(/<(?:.|\n)*?>/gm, '')
 
-    var dataBook = {
-        name: name,
-        image: img,
-        categorySlug: categoryName,
-        authorSlug: authorName,
-        slug: change_alias(name).toLowerCase().split(' ').filter(i => i).join('-'),
-        rate: 0,
-        description: description,
-        url: url
-
-    }
-    book.createOrUpdate({ slug: dataBook.slug }, dataBook, (e, r) => { })
-}
+//     var dataBook = {
+//         name: name,
+//         image: img,
+//         categorySlug: categoryName,
+//         authorSlug: authorName,
+//         slug: change_alias(name).toLowerCase().split(' ').filter(i => i).join('-'),
+//         description: $($.parseHTML(description)).text(),
+//         url: url,
+//         rate: 4,
+//     }
+//     console.log(i++, dataBook.slug)
+//     book.createOrUpdate({ slug: dataBook.slug }, dataBook, (e, r) => { })
+// }
+var a = 0;
 const getBooks = async (url, end) => {
     for (let i = 1; i <= end; i++) {
         var $ = await getPageContent(`${url}/${i}`);
-        var bookUrls = []
-        $('.ebook').each(async (i, el) => {
+        $('.ebook').each(async (_i, el) => {
             var bookUrl = $(el).find('a').attr('href');
-            bookUrls.push(bookUrl);
+            var name = $(el).find('h5').text();
+           var dataBook = {
+                name:name,
+                url: bookUrl,
+                slug: change_alias(name).toLowerCase().split(' ').filter(i => i).join('-'),
+            };
+            console.log(a++, dataBook.slug)
+            book.createOrUpdate({ slug: dataBook.slug }, dataBook, (e, r) => { })
         })
-
-
-        for (let booki = 0; booki < bookUrls.length; booki++) {
-            console.log('book', bookUrls[booki])
-            await getBook(bookUrls[booki]);
-
-        }
     }
 }
 const getCate = async (url) => {
@@ -94,7 +94,8 @@ const getCate = async (url) => {
     var end = $('.pagination li:last-child a').data('ci-pagination-page');
     var nearEnd = $('.pagination li:last-child').prev("li").find('a').data('ci-pagination-page');
     var end = nearEnd > end ? nearEnd : end;
-     getBooks(url, +end || 1);
+    console.log('url ======>', url)
+    await  getBooks(url, +end || 1);
 }
 
 getPageContent(`${URL}`).then(async ($) => {
@@ -107,35 +108,7 @@ getPageContent(`${URL}`).then(async ($) => {
 
     })
     for (let i = 0; i < cates.length; i++) {
-        console.log('cate',  cates[i])
         getCate(cates[i]);
     }
 })
 
- 
-
-
-var bookList = []
-const getBook = async (url) => {
-    var $ = await getPageContent(url);
-
-    var name = $('.thong_tin_ebook .col-md-8 .ebook_title').text();
-    var authorName = $('.thong_tin_ebook .col-md-8 h5:nth-child(3)').text();
-
-    var categoryName = $('.thong_tin_ebook .col-md-8 h5:nth-child(4)').text();
-    categoryName = categoryName.substring(11)
-    authorName = authorName.substring(10)
-    var img = $('.thong_tin_ebook .cover img').attr('src');
-    var description = $('.gioi_thieu_sach').text();
-
-    var dataBook = {
-        name: name,
-        image: img,
-        categorySlug: categoryName,
-        authorSlug: authorName,
-        slug: change_alias(name).toLowerCase().split(' ').filter(i => i).join('-'),
-        description: description,
-
-    }
-    bookList.push(dataBook);
-}
