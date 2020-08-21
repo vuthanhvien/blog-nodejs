@@ -10,8 +10,8 @@ schema.statics = {
         const page = paging.page || 0;
         const offset = limit * page;
         const sortBy = paging.sortBy || 'createdAt';
-        const sortType = paging.sortType || 'desc';
-        const total = await this.countDocuments()
+        const sortType = paging.sortType || 'desc'; 
+        const total = await this.countDocuments(paging.query || {})
         const list = await this.find(paging.query || {})
             .limit(+limit)
             .skip(+offset)

@@ -12,14 +12,12 @@ module.exports = {
         const offset = limit * page;
         const sortBy = paging.sortBy || 'createdAt';
         const sortType = paging.sortType || 'desc';
-        const total = await this.countDocuments()
+        const total = await this.countDocuments(paging.query || {})
         const list = await this.find(paging.query || {})
             .limit(+limit)
             .skip(+offset)
             .sort({ [sortBy]: sortType })
-            // .populate('book', 'name')
-            // .populate('author', 'name')
-            // .populate('category', 'name')
+            
         cb(false, list, total)
     },
     listAll: function (paging, cb) {
