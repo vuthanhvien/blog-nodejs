@@ -25,7 +25,7 @@ const getPageContent = (uri) => {
 
     return request(options)
 }
-const getChapter = async (bookObj, end = 1) => {
+const getChapter = async (bookObj, end = 1, count) => {
     var index = 0;
     for (let i = 1; i <= end; i++) {
         var $ = await getPageContent(`${bookObj.url}/${i}`);
@@ -39,20 +39,20 @@ const getChapter = async (bookObj, end = 1) => {
                 slug: bookObj.slug + '_' + $(el).text()
             }
             chapter.createOrUpdate({ slug: data.slug }, data, (e, r) => { })
-            console.log(index, data.slug)
+            console.log( count,index, data.slug)
         })
 
 
     }
 }
-const getBook = async (bookObj) => {
+const getBook = async (bookObj, count) => {
     try {
         var $ = await getPageContent(`${bookObj.url}`);
 
         var end = $('#list-chapter .pagination li:last-child a').data('ci-pagination-page');
         var nearEnd = $('#list-chapter  .pagination li:last-child').prev("li").find('a').data('ci-pagination-page');
         var end = nearEnd > end ? nearEnd : end;
-        await getChapter(bookObj, end);
+        await getChapter(bookObj, end, count);
     } catch (e) {
         console.log(e)
     }
@@ -62,10 +62,10 @@ book.listAll({ sortBy: 'slug', sortType: 'asc' }, async (e, all) => {
     console.log('all', all.length)
     var step = 10;
     let i = 0;
-    for (i = 2430; i < all.length; i = i + step) {
+    for (i = 4160; i < all.length; i = i + step) {
         var actions = []
         for (let a = 0; a < step; a++) {
-            actions.push(getBook(all[i + a]));
+            actions.push(getBook(all[i + a], i));
         }
         try {
             console.log('~~~~~~' + i + '~~~~~~~')

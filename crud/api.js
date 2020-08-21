@@ -17,9 +17,9 @@ module.exports = {
             .limit(+limit)
             .skip(+offset)
             .sort({ [sortBy]: sortType })
-            .populate('book', 'name')
-            .populate('author', 'name')
-            .populate('category', 'name')
+            // .populate('book', 'name')
+            // .populate('author', 'name')
+            // .populate('category', 'name')
         cb(false, list, total)
     },
     listAll: function (paging, cb) {
