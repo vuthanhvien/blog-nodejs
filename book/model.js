@@ -22,7 +22,9 @@ module.exports = new Schema({
     url: String,
     linkPDF: String,
     linkEPUB: String,
-    linkMOBI: String
+    linkMOBI: String,
+    linkONLINE: String,
+    linkPRC: String
 }, {
     timestamps: true,
     versionKey: false
