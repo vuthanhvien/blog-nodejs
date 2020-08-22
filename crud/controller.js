@@ -17,7 +17,7 @@ module.exports = (API) => {
             ...req.query
         }
         if(paging.query.s){
-            paging.query.$text ={$search : paging.query.s};
+            paging.query.$text ={$search : '\"'+ paging.query.s.toLowerCase() + '\"'};
             delete paging.query.s;
         }
         delete paging.query.limit;
