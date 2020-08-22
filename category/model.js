@@ -9,7 +9,9 @@ module.exports = new mongoose.Schema({
     description: String,
     image: String,
     banner: String,
-    slug: String
+    slug: String,
+    totalBook: Number,
+    totalAuthor: Number,
 }, {
     timestamps: true,
     versionKey: false 

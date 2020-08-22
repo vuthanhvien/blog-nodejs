@@ -57,7 +57,7 @@ const getChapter = (c = {}, count) => {
 }
 
 
-chapter.list({ query: { description: null }, limit: 2000, page: 0 }, async (e, all) => {
+chapter.list({ query: { description: null }, limit: 5000, page: 0 }, async (e, all) => {
 
     var step = 30;
     var start = 0;

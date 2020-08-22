@@ -17,7 +17,7 @@ schema.statics = {
             .skip(+offset)
             .sort({ [sortBy]: sortType })
             .populate('book', 'name,image'.split(','))
-            .populate('user', 'name,avatar'.split(','))
+            .populate('user', 'username,avatar'.split(','))
         cb(false, list, total)
     },
 }

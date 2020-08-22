@@ -104,7 +104,17 @@ getPageContent(`${URL}`).then(async ($) => {
 
     $('.cat-item').each((i, el) => {
         var url = $(el).find('a').attr('href');
-        cates.push(url)
+        cates.push(url);
+        var categoryData = {
+                "name":  $(el).find('a').text(),
+                "description":  $(el).find('a').text(),
+                "image": "",
+                "banner": "",
+                "slug": $(el).find('a').text(),
+                "totalBook": 1000,
+                "totalAuthor": 100
+        }
+        category.createOrUpdate({slug: categoryData.slug}, categoryData, (e, r) => { })
 
     })
     for (let i = 0; i < cates.length; i++) {
