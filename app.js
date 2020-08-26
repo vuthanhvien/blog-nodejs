@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
+var path = require('path');
 
 
 var bodyParserJSON = bodyParser.json();
@@ -43,6 +44,14 @@ mongoose.connect(url, {
    useFindAndModify: false });
 
 app.use('/api', router);
+
 route(router);
+
+
+app.get('**',function(req, res) {
+  console.log(req)
+  res.sendFile(path.join(__dirname + '/dist/'+req.originalUrl));
+ });
+
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))

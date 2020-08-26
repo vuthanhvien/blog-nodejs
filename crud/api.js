@@ -23,7 +23,6 @@ module.exports = {
     listAll: function (paging, cb) {
         const sortBy = paging.sortBy || 'createdAt';
         const sortType = paging.sortType || 'desc';
-        console.log('paging.query',paging.query)
         this.find(paging.query || {}, cb).sort({ [sortBy]: sortType })
     },
 
