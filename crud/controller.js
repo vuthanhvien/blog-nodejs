@@ -99,10 +99,8 @@ module.exports = (API) => {
                     msg: "Record deleted successfully"
                 })
             }
-
         })
     }
-
 
 
     return module
