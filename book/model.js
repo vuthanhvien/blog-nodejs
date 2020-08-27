@@ -7,8 +7,8 @@ module.exports = new Schema({
         type: String,
         unique: false,
         required: true,
-        index: true 
     },
+    search: { type: String, index: true },
     slug: String,
     author: { type: Schema.Types.ObjectId, ref: 'Author' },
     category: { type: Schema.Types.ObjectId, ref: 'Category' },
@@ -28,4 +28,4 @@ module.exports = new Schema({
 }, {
     timestamps: true,
     versionKey: false
-}).index({name: 'text'});
+}).index({ search: 'text' });
