@@ -13,7 +13,8 @@ module.exports = {
         const sortBy = paging.sortBy || 'createdAt';
         const sortType = paging.sortType || 'desc';
         const total = await this.countDocuments(paging.query || {})
-        const list = await this.find(paging.query || {})
+        var fields = (paging.fields + '').split(',').join(' ');
+        const list = await this.find(paging.query || {}, paging.fields ?  fields : '')
             .limit(+limit)
             .skip(+offset)
             .sort({ [sortBy]: sortType })

@@ -21,20 +21,23 @@ module.exports = (API) => {
             paging.query.$text = { $search: '\"' + paging.query.s.toLowerCase() + '\"' };
             delete paging.query.s;
         }
+        var fields = paging.query.fields;
         delete paging.query.limit;
         delete paging.query.page;
         delete paging.query.sortBy;
         delete paging.query.sortType;
+        delete paging.query.fields;
         var query = {};
         Object.keys(paging.query).map(key => {
             var keys = key.split('_');
             if (keys[1]) {
-                query[keys[0]] = { ['$'+keys[1]]: paging.query[key] }
+                query[keys[0]] = { ['$' + keys[1]]: paging.query[key] }
             } else {
                 query[keys[0]] = paging.query[key]
             }
         })
-        paging.query=  query;
+        paging.fields = fields;
+        paging.query = query;
         API.list(paging, function (err, list, total) {
             if (err) res.json(err)
             else
