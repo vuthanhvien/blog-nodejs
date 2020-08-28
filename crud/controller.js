@@ -25,15 +25,24 @@ module.exports = (API) => {
         delete paging.query.page;
         delete paging.query.sortBy;
         delete paging.query.sortType;
-
+        var query = {};
+        Object.keys(paging.query).map(key => {
+            var keys = key.split('_');
+            if (keys[1]) {
+                query[keys[0]] = { ['$'+keys[1]]: paging.query[key] }
+            } else {
+                query[keys[0]] = paging.query[key]
+            }
+        })
+        paging.query=  query;
         API.list(paging, function (err, list, total) {
-            if (err) res.json(err) 
+            if (err) res.json(err)
             else
-            res.json({
-                list: list,
-                success: true,
-                total: total
-            })
+                res.json({
+                    list: list,
+                    success: true,
+                    total: total
+                })
         })
     }
     module.listAll = function (req, res, next) {
@@ -49,11 +58,11 @@ module.exports = (API) => {
         API.listAll(paging, function (err, list, total) {
             if (err) res.json(err)
             else
-            res.json({
-                list: list,
-                success: true,
-                total: total
-            })
+                res.json({
+                    list: list,
+                    success: true,
+                    total: total
+                })
         })
     }
 
@@ -61,7 +70,7 @@ module.exports = (API) => {
         API.detail({ _id: req.params.id }, function (err, r) {
             if (err) res.json(err)
             else
-            res.json(r)
+                res.json(r)
         })
     }
 
@@ -71,10 +80,10 @@ module.exports = (API) => {
         API.update({ _id: req.params.id }, data, function (err, r) {
             if (err) res.json(err)
             else
-            res.json({
-                msg: "Record updated successfully",
-                success: true
-            })
+                res.json({
+                    msg: "Record updated successfully",
+                    success: true
+                })
         })
     }
 
@@ -82,9 +91,9 @@ module.exports = (API) => {
         API.delete({ _id: req.params.id }, function (err, r) {
             if (err) res.json(err)
             else
-            res.json({
-                msg: "Record deleted successfully"
-            })
+                res.json({
+                    msg: "Record deleted successfully"
+                })
         })
     }
 
@@ -94,11 +103,11 @@ module.exports = (API) => {
         API.createOrUpdate(data, function (err, r) {
             if (err) res.json(err)
             else
-            if (res) {
-                res.json({
-                    msg: "Record deleted successfully"
-                })
-            }
+                if (res) {
+                    res.json({
+                        msg: "Record deleted successfully"
+                    })
+                }
         })
     }
 
