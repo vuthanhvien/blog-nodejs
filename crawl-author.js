@@ -13,7 +13,8 @@ mongoose.connect(urlDB, { useNewUrlParser: true, useUnifiedTopology: true, useCr
 const category = require('./category/api')
 const book = require('./book/api')
 const author = require('./author/api')
- 
+const chapter = require('./chapter/api')
+
 
 // book.find().distinct('authorSlug', function(error, ids) {
 //     // ids is an array of all ObjectIds
@@ -28,11 +29,11 @@ const author = require('./author/api')
 //     //     author.createOrUpdate({slug: authorData.slug}, authorData, ()=>{})
 //     // })
 // });
-book.dropIndexes(function(){
-    book.reIndex(function(finished){
-            console.log("finished re indexing")
-     })
-})
+// book.dropIndexes(function(){
+//     book.reIndex(function(finished){
+//             console.log("finished re indexing")
+//      })
+// })
 
 // book.find((e,res)=>{
 //     res.map(i=>{
@@ -43,6 +44,17 @@ book.dropIndexes(function(){
 //         book.findByIdAndUpdate(i._id, {search: searchText}, ()=>{})
 //     })
 // })
+var count = 0;
+book.find((e, res) => {
+    res.map(i => {
+        chapter.countDocuments({ book: i._id }, (_, total) => {
+            book.findByIdAndUpdate(i._id, { totalChapter: total }, () => {
+                console.log(++count)
+
+             })
+        })
+    })
+})
 
 
 function change_alias(alias) {

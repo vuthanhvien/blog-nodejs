@@ -24,7 +24,8 @@ module.exports = new Schema({
     linkEPUB: String,
     linkMOBI: String,
     linkONLINE: String,
-    linkPRC: String
+    linkPRC: String,
+    totalChapter: {type: Number, default: 0}
 }, {
     timestamps: true,
     versionKey: false

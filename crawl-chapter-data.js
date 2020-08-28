@@ -62,8 +62,7 @@ const getChapter = (c = {}, count) => {
 }
 
 
-chapter.list({ query: { description: null }, limit: 5000, page: 0, orderType: 'asc' }, async (e, all) => {
-
+chapter.list({ query: { description: 'error' }, limit: 5000, page: 0, orderType: 'asc' }, async (e, all) => {
     var step = 30;
     var start = 0;
     for (let i = start; i < all.length; i = i + step) {
@@ -83,5 +82,9 @@ chapter.list({ query: { description: null }, limit: 5000, page: 0, orderType: 'a
 
 chapter.countDocuments({ description: null }, function (err, c) {
     console.log('Count is ' + c);
+});
+
+chapter.countDocuments({ description: 'error' }, function (err, c) {
+    console.log('Count error is ' + c);
 });
 
